@@ -1,3 +1,8 @@
+provider "aws" {
+  region  = "us-east-1"   # change as needed
+  profile = "default"     # or omit this if using environment variables
+}
+
 resource "aws_vpc" "Terraform_VPC" {
   cidr_block           = var.vpc_cidr
   instance_tenancy     = "default"
