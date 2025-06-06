@@ -21,21 +21,19 @@
     - name: Clean all yum metadata
       command: yum clean metadata
 
-    - name: Install Docker (from Amazon Linux Extras)
+    - name: Install Docker pip python3-pip (from Amazon Linux Extras)
       yum:
-        name: docker
-        state: present
+        name:
+          - docker
+          - pip
+          - python3-pip
+        state: present
 
     - name: Start and enable Docker service
       service:
         name: docker
         state: started
         enabled: yes
-
-    - name: Install pip3
-      yum:
-        name: python3-pip
-        state: present
 
     - name: Install Python 'requests' module
       pip:
