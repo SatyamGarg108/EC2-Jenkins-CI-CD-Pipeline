@@ -1,0 +1,62 @@
+- hosts: webservers
+  become: true
+  tasks:
+
+    - name: Remove Docker CE repo if it exists (fix broken CentOS 2 path)
+      file:
+        path: /etc/yum.repos.d/docker-ce.repo
+        state: absent
+
+    - name: Clean Yum metadata
+      command: yum clean all
+
+    - name: Rebuild Yum cache
+      command: yum makecache
+
+    - name: Enable docker in Amazon Linux Extras
+      command: amazon-linux-extras enable docker
+      args:
+        creates: /etc/yum.repos.d/amzn2-extras.repo
+
+    - name: Clean all yum metadata
+      command: yum clean metadata
+
+    - name: Install Docker (from Amazon Linux Extras)
+      yum:
+        name: docker
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install pip3
+      yum:
+        name: python3-pip
+        state: present
+
+    - name: Install Python 'requests' module
+      pip:
+        name: requests
+        executable: pip3
+
+    - name: Downgrade urllib3 to compatible version
+      pip:
+        name: urllib3==1.26.16
+        executable: pip3
+
+    - name: Pull latest NGINX image
+      docker_image:
+        name: nginx
+        source: pull
+
+    - name: Run NGINX container
+      docker_container:
+        name: nginx-container
+        image: nginx
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"

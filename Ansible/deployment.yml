@@ -1,0 +1,33 @@
+- name : Build and Deploy Docker container
+  hosts: dockerserver
+  gather_facts: false
+  remote_user: root
+  tasks:
+
+    - name: Stopping Docker container
+      command: docker stop restaurant-container
+
+    - name: Removing Docker container
+      command: docker rm -f restaurant-container
+
+    - name: Removing Docker image
+      command: docker rmi restaurant:latest
+
+    - name: Copy the files to the remote server
+      command: scp -r /var/lib/jenkins/workspace/ansible-jenkins-docker-pipeline/* root@44.204.184.210:~/project
+
+    - name: Building Docker Image
+      docker_image:
+        name: restaurant:latest
+        source: build
+        build:
+          path: ~/project
+        state: present
+
+    - name: Creating the container
+      docker_container:
+        name: restaurant-container
+        image: restaurant:latest
+        ports:
+          - "80:80"
+        state: started
