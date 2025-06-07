@@ -6,6 +6,7 @@ Provisioned AWS infra using Terraform for **Continuous integration and continuou
 - github configured
 - AWS configured
 
+
 ### Step 1
 ```terraform init```
 
