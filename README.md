@@ -20,3 +20,6 @@ Provisioned AWS infra using Terraform for **Continuous integration and continuou
 
 ### When done and want to remove the provisioned infrastructure
 ```terraform destroy```
+
+credit:
+**originally forked from:** https://github.com/Keerthibb/Terraform-Jenkins-Ansible-Docker-CI-CD-Pipeline
