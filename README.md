@@ -12,7 +12,7 @@ Provisioned AWS infra using Terraform for **Continuous integration and continuou
 
 ### Step 2
 ```Terraform plan```
-^ if you want to see what will be provisioned on AWS
+<-- if you want to see what will be provisioned on AWS
 
 ### Step 3
 ```terraform apply```
