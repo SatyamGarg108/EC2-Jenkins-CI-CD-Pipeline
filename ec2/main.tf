@@ -65,12 +65,12 @@ resource "null_resource" "generate_inventory" {
 
   provisioner "local-exec" {
     command = <<EOT
-      echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Generating inventory file!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      echo "!!!!!Generating inventory file!!!!!"
       chmod 600 ./${var.key_name}
       echo "[webservers]" > Ansible/inventory.ini
       echo "${aws_instance.prj-vm[0].public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=./${var.key_name}" >> Ansible/inventory.ini
       echo "Current directory: $(pwd)"
-      echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!DONE Generating inventory file!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      echo "!!!!!!DONE Generating inventory file!!!!!"
     EOT
   }
 }
